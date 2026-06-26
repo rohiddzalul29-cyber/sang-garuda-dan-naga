@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Sang Garuda dan Naga — Rohid Dzalul</title>
+    <meta
+      name="description"
+      content="Novela geopolitik thriller: Sang Garuda dan Naga, oleh Rohid Dzalul"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ============================================================
+   SANG GARUDA DAN NAGA — Web Novel
+   Tokens
+   - Ink (latar gelap):      #14100c
+   - Ink soft:                #1f1812
+   - Paper (kertas):          #f4ead8
+   - Paper soft:               #ece0c8
+   - Garuda red (aksen utama): #8b3a2f
+   - Brass/gold (ornamen):     #c9a14a
+   - Naga green (aksen lawan): #2d3b2e
+   - Sepia ink (teks):         #3c2f22
+   Display: Oswald (tegas, militer)
+   Body: Crimson Pro (serif klasik, nyaman dibaca panjang)
+   Mono: Space Mono (label, nomor bab, meta)
+   ============================================================ */
+
+      :root {
+        --ink: #14100c;
+        --ink-soft: #1f1812;
+        --paper: #f4ead8;
+        --paper-soft: #ece0c8;
+        --paper-shadow: #d8c7a3;
+        --garuda: #8b3a2f;
+        --garuda-dark: #6b2b22;
+        --brass: #c9a14a;
+        --brass-soft: #a98538;
+        --naga: #2d3b2e;
+        --sepia: #3c2f22;
+        --sepia-soft: #5c4a36;
+
+        --font-display: "Oswald", sans-serif;
+        --font-body: "Crimson Pro", Georgia, serif;
+        --font-mono: "Space Mono", monospace;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      body {
+        overflow: visible;
+      }
+
+      html,
+      body {
+        width: 100%;
+        min-height: 100%;
+        background: var(--ink);
+        font-family: var(--font-body);
+        color: var(--sepia);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        position: relative;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font-family: inherit;
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: inherit;
+      }
+
+      ::selection {
+        background: var(--brass);
+        color: var(--ink);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* ============================================================
+   APP SHELL
+   ============================================================ */
+      #app {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+      }
+
+      .view {
+        display: none;
+        width: 100%;
+        min-height: 100vh;
+      }
+      .view.active {
+        display: block;
+      }
+
+      /* ============================================================
+   COVER VIEW
+   ============================================================ */
+      #view-cover {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        background: var(--ink);
+        cursor: pointer;
+      }
+
+      .cover-backdrop {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center 20%;
+        filter: blur(40px) saturate(1.1) brightness(0.55);
+        transform: scale(1.15);
+      }
+
+      .cover-img-wrap {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cover-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center center;
+        display: block;
+        filter: saturate(1.02);
+        box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+      }
+
+      /* Di layar tegak (HP, tablet potret) gambar sudah sesuai rasio: penuhi layar tanpa letterbox */
+      @media (max-aspect-ratio: 4/5) {
+        .cover-img-wrap img {
+          object-fit: cover;
+          object-position: center 15%;
+          box-shadow: none;
+        }
+      }
+
+      .cover-vignette {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at 50% 100%,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0) 45%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.25) 0%,
+            rgba(0, 0, 0, 0) 16%,
+            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0.35) 88%,
+            rgba(0, 0, 0, 0.6) 100%
+          );
+        pointer-events: none;
+      }
+
+      @media (max-aspect-ratio: 4/5) {
+        .cover-vignette {
+          background:
+            radial-gradient(
+              ellipse at 50% 100%,
+              rgba(0, 0, 0, 0.85) 0%,
+              rgba(0, 0, 0, 0) 50%
+            ),
+            linear-gradient(
+              to bottom,
+              rgba(0, 0, 0, 0.35) 0%,
+              rgba(0, 0, 0, 0) 18%,
+              rgba(0, 0, 0, 0) 55%,
+              rgba(0, 0, 0, 0.55) 78%,
+              rgba(0, 0, 0, 0.92) 100%
+            );
+        }
+      }
+
+      .cover-content {
+        position: absolute;
+        z-index: 3;
+        left: 0;
+        right: 0;
+        bottom: max(18px, env(safe-area-inset-bottom, 0px));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 6vw;
+        text-align: center;
+        color: #f4ead8;
+        pointer-events: none;
+      }
+
+      .cover-bottom-bar {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 18vh;
+        min-height: 120px;
+        max-height: 170px;
+        background: linear-gradient(
+          to top,
+          var(--ink) 0%,
+          var(--ink) 45%,
+          rgba(20, 16, 12, 0) 100%
+        );
+        pointer-events: none;
+      }
+
+      .cover-tap-hint {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 26px;
+        border-radius: 30px;
+        background: var(--ink-soft);
+        border: 1px solid rgba(201, 161, 74, 0.55);
+        box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6);
+        pointer-events: auto;
+        animation: pulseHint 2.6s ease-in-out infinite;
+      }
+
+      .cover-tap-hint svg {
+        width: 15px;
+        height: 15px;
+        color: var(--brass);
+        flex-shrink: 0;
+      }
+
+      .cover-tap-hint span {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--brass);
+      }
+
+      @keyframes pulseHint {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: translateY(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateY(-4px);
+        }
+      }
+
+      .cover-corner-mark {
+        position: absolute;
+        width: 34px;
+        height: 34px;
+        z-index: 3;
+        opacity: 0.85;
+      }
+      .cover-corner-mark.tl {
+        top: 18px;
+        left: 18px;
+        border-top: 2px solid var(--brass);
+        border-left: 2px solid var(--brass);
+      }
+      .cover-corner-mark.tr {
+        top: 18px;
+        right: 18px;
+        border-top: 2px solid var(--brass);
+        border-right: 2px solid var(--brass);
+      }
+      .cover-corner-mark.bl {
+        bottom: 18px;
+        left: 18px;
+        border-bottom: 2px solid var(--brass);
+        border-left: 2px solid var(--brass);
+      }
+      .cover-corner-mark.br {
+        bottom: 18px;
+        right: 18px;
+        border-bottom: 2px solid var(--brass);
+        border-right: 2px solid var(--brass);
+      }
+
+      /* Cover open transition */
+      #view-cover.opening {
+        animation: coverOpen 0.7s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+      }
+      @keyframes coverOpen {
+        0% {
+          transform: scale(1);
+          filter: brightness(1);
+        }
+        100% {
+          transform: scale(1.06);
+          filter: brightness(0.4);
+        }
+      }
+
+      /* ============================================================
+   SHARED HEADER (TOC + READER)
+   ============================================================ */
+      .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        background: linear-gradient(
+          to bottom,
+          var(--ink) 70%,
+          rgba(20, 16, 12, 0)
+        );
+        backdrop-filter: blur(6px);
+      }
+
+      .app-header .brand {
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--brass);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .app-header .brand .dot {
+        width: 6px;
+        height: 6px;
+        background: var(--garuda);
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(201, 161, 74, 0.4);
+        border-radius: 50%;
+        color: var(--paper);
+        transition:
+          border-color 0.2s,
+          background 0.2s;
+      }
+      .icon-btn:hover {
+        border-color: var(--brass);
+        background: rgba(201, 161, 74, 0.08);
+      }
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* ============================================================
+   TABLE OF CONTENTS VIEW
+   ============================================================ */
+      #view-toc {
+        background: var(--ink);
+        min-height: 100vh;
+        padding-bottom: 60px;
+      }
+
+      .toc-hero {
+        position: relative;
+        padding: 28px 24px 36px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .toc-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 50% 0%,
+          rgba(139, 58, 47, 0.18) 0%,
+          rgba(139, 58, 47, 0) 60%
+        );
+        pointer-events: none;
+      }
+
+      .toc-eyebrow {
+        position: relative;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--brass);
+        margin-bottom: 14px;
+      }
+
+      .toc-title {
+        position: relative;
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: var(--paper);
+        font-size: clamp(2rem, 8vw, 3.2rem);
+        line-height: 1.05;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+      }
+      .toc-title .accent {
+        color: var(--garuda);
+      }
+
+      .toc-subtitle {
+        position: relative;
+        font-family: var(--font-body);
+        font-style: italic;
+        color: var(--paper-shadow);
+        font-size: 1.05rem;
+        margin-top: 10px;
+      }
+
+      .toc-meta-row {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 18px;
+        flex-wrap: wrap;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.08em;
+        color: rgba(244, 234, 216, 0.55);
+        text-transform: uppercase;
+      }
+      .toc-meta-row span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .toc-meta-row .sep {
+        color: var(--brass);
+      }
+
+      .toc-divider {
+        width: 120px;
+        height: 1px;
+        margin: 22px auto 0;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--brass),
+          transparent
+        );
+        position: relative;
+      }
+
+      .toc-continue-row {
+        position: relative;
+        margin: 0 auto;
+        max-width: 640px;
+        padding: 0 24px 8px;
+      }
+
+      .continue-card {
+        display: none;
+        margin-top: 22px;
+        padding: 16px 18px;
+        border: 1px solid rgba(201, 161, 74, 0.35);
+        border-radius: 10px;
+        background: rgba(201, 161, 74, 0.06);
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .continue-card.show {
+        display: flex;
+      }
+      .continue-card .cc-text {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.05em;
+        color: var(--paper-shadow);
+        text-transform: uppercase;
+      }
+      .continue-card .cc-text strong {
+        display: block;
+        font-family: var(--font-body);
+        font-style: normal;
+        font-size: 15px;
+        letter-spacing: 0;
+        color: var(--paper);
+        margin-top: 4px;
+        text-transform: none;
+      }
+      .continue-card button {
+        flex-shrink: 0;
+        font-family: var(--font-display);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink);
+        background: var(--brass);
+        padding: 10px 16px;
+        border-radius: 6px;
+        transition:
+          background 0.2s,
+          transform 0.15s;
+      }
+      .continue-card button:hover {
+        background: #ddb45a;
+      }
+      .continue-card button:active {
+        transform: scale(0.96);
+      }
+
+      .toc-list {
+        max-width: 640px;
+        margin: 28px auto 0;
+        padding: 0 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .toc-section-label {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--brass-soft);
+        padding: 18px 8px 4px;
+      }
+
+      .toc-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 14px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+        position: relative;
+      }
+
+      .toc-item:hover {
+        background: rgba(244, 234, 216, 0.04);
+        border-color: rgba(201, 161, 74, 0.25);
+      }
+      .toc-item:active {
+        transform: scale(0.985);
+      }
+
+      .toc-item .toc-num {
+        flex-shrink: 0;
+        width: 46px;
+        height: 46px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 17px;
+        font-weight: 600;
+        color: var(--paper);
+        border: 1px solid rgba(201, 161, 74, 0.4);
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .toc-item.read .toc-num {
+        background: var(--garuda);
+        border-color: var(--garuda);
+        color: var(--paper);
+      }
+
+      .toc-item .toc-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .toc-item .toc-chip {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--brass-soft);
+        margin-bottom: 3px;
+        display: block;
+      }
+
+      .toc-item .toc-name {
+        font-family: var(--font-display);
+        font-size: 15.5px;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        color: var(--paper);
+        text-transform: uppercase;
+        line-height: 1.3;
+      }
+
+      .toc-item .toc-arrow {
+        flex-shrink: 0;
+        color: var(--brass);
+        opacity: 0.6;
+        transition: transform 0.2s;
+      }
+      .toc-item:hover .toc-arrow {
+        transform: translateX(3px);
+        opacity: 1;
+      }
+
+      .toc-item.epilog .toc-num {
+        border-color: var(--naga);
+        color: var(--paper);
+      }
+      .toc-item.epilog .toc-chip {
+        color: #5d8a64;
+      }
+
+      .toc-footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 0 24px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        color: rgba(244, 234, 216, 0.35);
+        text-transform: uppercase;
+      }
+
+      /* ============================================================
+   READER VIEW — kertas dengan ornamen ukiran tepi
+   ============================================================ */
+      #view-reader {
+        background: var(--ink);
+        min-height: 100vh;
+      }
+
+      .reader-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 14px 16px;
+        position: sticky;
+        top: 0;
+        z-index: 60;
+        background: rgba(20, 16, 12, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(201, 161, 74, 0.18);
+      }
+
+      .reader-header .rh-title {
+        flex: 1;
+        min-width: 0;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--paper-shadow);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .reader-header .rh-title strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        color: var(--paper);
+        margin-top: 2px;
+        text-transform: uppercase;
+      }
+
+      .progress-track {
+        position: sticky;
+        top: 65px;
+        z-index: 59;
+        height: 3px;
+        width: 100%;
+        background: rgba(244, 234, 216, 0.08);
+      }
+      .progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(to right, var(--garuda), var(--brass));
+        transition: width 0.1s linear;
+      }
+
+      .page-frame {
+        max-width: 760px;
+        margin: 28px auto 0;
+        padding: 0 14px 80px;
+      }
+
+      /* Kertas dengan ornamen ukiran tepi */
+      .parchment {
+        position: relative;
+        background: var(--paper);
+        background-image: repeating-linear-gradient(
+          0deg,
+          rgba(60, 47, 34, 0.018) 0px,
+          rgba(60, 47, 34, 0.018) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        border-radius: 6px;
+        box-shadow:
+          0 30px 60px -20px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(60, 47, 34, 0.08);
+        padding: 38px 28px 50px;
+        overflow: hidden;
+      }
+
+      @media (min-width: 640px) {
+        .parchment {
+          padding: 56px 64px 70px;
+        }
+      }
+
+      .parchment::before,
+      .parchment::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 30px;
+        background-repeat: repeat-x;
+        background-size: 56px 30px;
+        opacity: 0.55;
+        pointer-events: none;
+      }
+      .parchment::before {
+        top: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='30' viewBox='0 0 56 30'><path d='M0 30 C 8 6, 20 6, 28 18 C 36 6, 48 6, 56 30 Z' fill='none' stroke='%238b3a2f' stroke-width='1.4'/><circle cx='28' cy='14' r='2' fill='%23c9a14a'/></svg>");
+      }
+      .parchment::after {
+        bottom: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='30' viewBox='0 0 56 30'><path d='M0 0 C 8 24, 20 24, 28 12 C 36 24, 48 24, 56 0 Z' fill='none' stroke='%238b3a2f' stroke-width='1.4'/><circle cx='28' cy='16' r='2' fill='%23c9a14a'/></svg>");
+      }
+
+      .parchment-side-l,
+      .parchment-side-r {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 14px;
+        background-repeat: repeat-y;
+        background-size: 14px 56px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .parchment-side-l {
+        left: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='56' viewBox='0 0 14 56'><path d='M14 0 C 4 8, 4 20, 12 28 C 4 36, 4 48, 14 56' fill='none' stroke='%232d3b2e' stroke-width='1.2'/></svg>");
+      }
+      .parchment-side-r {
+        right: 0;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='56' viewBox='0 0 14 56'><path d='M0 0 C 10 8, 10 20, 2 28 C 10 36, 10 48, 0 56' fill='none' stroke='%232d3b2e' stroke-width='1.2'/></svg>");
+      }
+
+      .corner-orn {
+        position: absolute;
+        width: 46px;
+        height: 46px;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      .corner-orn svg {
+        width: 100%;
+        height: 100%;
+      }
+      .corner-orn.c-tl {
+        top: 8px;
+        left: 8px;
+      }
+      .corner-orn.c-tr {
+        top: 8px;
+        right: 8px;
+        transform: scaleX(-1);
+      }
+      .corner-orn.c-bl {
+        bottom: 8px;
+        left: 8px;
+        transform: scaleY(-1);
+      }
+      .corner-orn.c-br {
+        bottom: 8px;
+        right: 8px;
+        transform: scale(-1, -1);
+      }
+
+      .chapter-head {
+        position: relative;
+        text-align: center;
+        margin-bottom: 34px;
+        padding-top: 18px;
+      }
+
+      .chapter-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--garuda);
+      }
+
+      .chapter-eyebrow.is-epilog {
+        color: var(--naga);
+      }
+
+      .chapter-num-big {
+        font-family: var(--font-display);
+        font-size: 13px;
+        letter-spacing: 0.3em;
+        color: var(--brass-soft);
+        margin-top: 6px;
+      }
+
+      .chapter-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(1.5rem, 5.6vw, 2.1rem);
+        text-transform: uppercase;
+        color: var(--sepia);
+        margin-top: 10px;
+        letter-spacing: 0.01em;
+        line-height: 1.2;
+      }
+
+      .chapter-rule {
+        width: 90px;
+        height: 2px;
+        margin: 18px auto 0;
+        background: var(--brass);
+        position: relative;
+      }
+      .chapter-rule::before,
+      .chapter-rule::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--garuda);
+        transform: translateY(-50%);
+      }
+      .chapter-rule::before {
+        left: -14px;
+      }
+      .chapter-rule::after {
+        right: -14px;
+      }
+
+      .chapter-body {
+        position: relative;
+        font-family: var(--font-body);
+        font-size: 1.06rem;
+        line-height: 1.85;
+        color: var(--sepia);
+      }
+
+      .chapter-body p {
+        margin-bottom: 1.3em;
+        text-align: justify;
+        hyphens: auto;
+      }
+
+      .chapter-body p:first-of-type::first-letter {
+        font-family: var(--font-display);
+        font-size: 3.4em;
+        font-weight: 700;
+        float: left;
+        line-height: 0.8;
+        padding: 0.05em 0.08em 0 0;
+        color: var(--garuda);
+      }
+
+      .chapter-end-orn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin: 40px 0 4px;
+        color: var(--brass);
+      }
+      .chapter-end-orn .line {
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(to right, transparent, var(--brass));
+      }
+      .chapter-end-orn .line.right {
+        background: linear-gradient(to left, transparent, var(--brass));
+      }
+      .chapter-end-orn svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+      }
+
+      /* Reader navigation footer */
+      .reader-nav {
+        max-width: 760px;
+        margin: 26px auto 0;
+        padding: 0 14px;
+        display: flex;
+        gap: 12px;
+      }
+
+      .nav-btn {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        padding: 14px 16px;
+        border: 1px solid rgba(201, 161, 74, 0.3);
+        border-radius: 10px;
+        background: rgba(244, 234, 216, 0.03);
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          transform 0.15s;
+        text-align: left;
+      }
+      .nav-btn.next-btn {
+        align-items: flex-end;
+        text-align: right;
+      }
+      .nav-btn:hover {
+        background: rgba(201, 161, 74, 0.08);
+        border-color: var(--brass);
+      }
+      .nav-btn:active {
+        transform: scale(0.97);
+      }
+      .nav-btn:disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+
+      .nav-btn .nb-label {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--brass-soft);
+      }
+      .nav-btn .nb-title {
+        font-family: var(--font-display);
+        font-size: 13px;
+        text-transform: uppercase;
+        color: var(--paper);
+        letter-spacing: 0.02em;
+      }
+
+      .back-to-toc-row {
+        max-width: 760px;
+        margin: 18px auto 0;
+        padding: 0 14px;
+        text-align: center;
+      }
+      .back-to-toc-row button {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(244, 234, 216, 0.45);
+        padding: 10px;
+        transition: color 0.2s;
+      }
+      .back-to-toc-row button:hover {
+        color: var(--brass);
+      }
+
+      /* Swipe hint (mobile) */
+      .swipe-hint {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 55;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(244, 234, 216, 0.55);
+        background: rgba(20, 16, 12, 0.7);
+        border: 1px solid rgba(201, 161, 74, 0.3);
+        padding: 8px 14px;
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s;
+      }
+      .swipe-hint.show {
+        opacity: 1;
+      }
+      .swipe-hint svg {
+        width: 14px;
+        height: 14px;
+        animation: swipeMove 1.6s ease-in-out infinite;
+      }
+      @keyframes swipeMove {
+        0%,
+        100% {
+          transform: translateX(0);
+          opacity: 0.6;
+        }
+        50% {
+          transform: translateX(5px);
+          opacity: 1;
+        }
+      }
+
+      /* Page transition */
+      .page-frame {
+        animation: pageIn 0.35s ease;
+      }
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Scrollbar (subtle, desktop) */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--ink);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--sepia-soft);
+        border-radius: 6px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--brass-soft);
+      }
+
+      /* Responsive tweaks */
+      @media (max-width: 420px) {
+        .toc-meta-row {
+          gap: 10px;
+          font-size: 9.5px;
+        }
+        .chapter-body {
+          font-size: 1rem;
+        }
+        .nav-btn .nb-title {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- ============================================================
+       COVER VIEW
+       ============================================================ -->
+      <section
+        id="view-cover"
+        class="view active"
+        aria-label="Sampul novel, ketuk untuk membaca"
+      >
+        <div class="cover-backdrop" id="cover-backdrop"></div>
+
+        <div class="cover-corner-mark tl"></div>
+        <div class="cover-corner-mark tr"></div>
+        <div class="cover-corner-mark bl"></div>
+        <div class="cover-corner-mark br"></div>
+
+        <div class="cover-img-wrap">
+          <img
+            src="cover.png"
+            alt="Sampul novel Sang Garuda dan Naga: dua jenderal bermain catur di bawah lampu gantung dalam kegelapan"
+          />
+        </div>
+        <div class="cover-vignette"></div>
+        <div class="cover-bottom-bar"></div>
+
+        <div class="cover-content">
+          <div class="cover-tap-hint">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 5v14M19 12l-7 7-7-7" />
+            </svg>
+            <span>Ketuk untuk membaca</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+       TABLE OF CONTENTS VIEW
+       ============================================================ -->
+      <section id="view-toc" class="view" aria-label="Daftar isi">
+        <header class="app-header">
+          <span class="brand"
+            ><span class="dot"></span> Sang Garuda &amp; Naga</span
+          >
+          <button
+            class="icon-btn"
+            id="btn-toc-cover"
+            aria-label="Kembali ke sampul"
+            title="Kembali ke sampul"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 9.5L12 3l9 6.5" />
+              <path d="M5 10v10h14V10" />
+            </svg>
+          </button>
+        </header>
+
+        <div class="toc-hero">
+          <div class="toc-eyebrow">Novela Geopolitik Thriller</div>
+          <h1 class="toc-title">
+            Sang <span class="accent">Garuda</span><br />dan Naga
+          </h1>
+          <p class="toc-subtitle">Pertarungan Takhta Sumatra</p>
+          <div class="toc-meta-row">
+            <span>Rohid Dzalul</span>
+            <span class="sep">•</span>
+            <span>2045–2048</span>
+            <span class="sep">•</span>
+            <span>20 Bab + Epilog</span>
+          </div>
+          <div class="toc-divider"></div>
+        </div>
+
+        <div class="toc-continue-row">
+          <div class="continue-card" id="continue-card">
+            <div class="cc-text">
+              Lanjutkan membaca
+              <strong id="continue-text">—</strong>
+            </div>
+            <button id="btn-continue">Lanjutkan</button>
+          </div>
+        </div>
+
+        <div class="toc-list" id="toc-list">
+          <!-- diisi oleh app.js -->
+        </div>
+
+        <div class="toc-footer">Gulir dan ketuk bab untuk mulai membaca</div>
+      </section>
+
+      <!-- ============================================================
+       READER VIEW
+       ============================================================ -->
+      <section id="view-reader" class="view" aria-label="Halaman baca">
+        <header class="reader-header">
+          <button
+            class="icon-btn"
+            id="btn-reader-toc"
+            aria-label="Daftar isi"
+            title="Daftar isi"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 6h16" />
+              <path d="M4 12h16" />
+              <path d="M4 18h10" />
+            </svg>
+          </button>
+          <div class="rh-title">
+            <span id="rh-eyebrow">Bab</span>
+            <strong id="rh-title-text">—</strong>
+          </div>
+          <button
+            class="icon-btn"
+            id="btn-reader-cover"
+            aria-label="Sampul"
+            title="Sampul"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 9.5L12 3l9 6.5" />
+              <path d="M5 10v10h14V10" />
+            </svg>
+          </button>
+        </header>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="page-frame" id="page-frame">
+          <!-- diisi oleh app.js: artikel .parchment -->
+        </div>
+      </section>
+    </div>
+
+    <div class="swipe-hint" id="swipe-hint">
+      <span>Geser untuk bab berikutnya</span>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 12h14" />
+        <path d="M13 6l6 6-6 6" />
+      </svg>
+    </div>
+
+    <script src="novel-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
